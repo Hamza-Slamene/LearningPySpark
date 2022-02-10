@@ -20,6 +20,8 @@ dff = selectedColumn\
         .withColumn("year", year("Date").alias("year"))\
         .withColumn("mois", month("Date").alias("mois"))\
 
+dff.printSchema()
+
 df3 = dff.withColumn("month_name", 
      when(dff.mois == 1, lit("January"))\
     .when(dff.mois == 2, lit("February"))\
