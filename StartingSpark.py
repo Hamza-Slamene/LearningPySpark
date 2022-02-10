@@ -3,6 +3,8 @@
 from pyspark.sql import SparkSession, DataFrame, Column
 from pyspark.sql.functions import year, month, when, lit
 
+from SparkFunctions import SparkHelper
+
 spark = SparkSession.builder \
     .master("local") \
     .appName("Word Count") \
@@ -35,8 +37,10 @@ df3 = dff.withColumn("month_name",
     .when(dff.mois == 10, lit("October"))\
     .when(dff.mois == 11, lit("Novermber"))\
     .when(dff.mois == 12, lit("December")))
+mois = df3["mois"]
+df4 =  df3.withColumn("mois2", SparkHelper.process(df3, mois))
 
-df3.show(10, False)
+df4.show(10, False)
 
 spark.stop
 
